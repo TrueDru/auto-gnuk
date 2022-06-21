@@ -18,8 +18,10 @@ yes | rm gnuk -r -R  >> /dev/null 2>&1
 git clone $gnuk_repo
 echo -e "#Installing requirement packages for $DISTRO#"
 case $DISTRO in
- manjaro)
-  sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib openocd base-devel --noconfirm >> /dev/null;;        
+ manjaro | arch)
+  sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib openocd base-devel --noconfirm >> /dev/null;;
+ debian | ubuntu)
+  sudo apt-get update >> /dev/null && sudo apt-get install -y arm-none-eabi-gcc arm-none-eabi-newlib openocd build-essentials >> /dev/null;;         
 esac
 cd gnuk/src
 echo -e "#Updating submodules#"
