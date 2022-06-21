@@ -9,7 +9,8 @@ read -p "Choose what you want to do:
 3)Compile and upload  firmware to stm32 (DFU mode)
 4)Generate new ssh key on your stm32
 5)Import existing key to your key
-6)Exit (or leave choice empty)
+6)Add new key to ssh config
+7)Exit (or leave choice empty)
 >" menu
 
 cd scripts
@@ -42,6 +43,8 @@ case $menu in
      clear
      bash import-key.sh;;
     6)
+     bash ssh-config.sh;;
+    7)
      exit 0;; 
 esac
 

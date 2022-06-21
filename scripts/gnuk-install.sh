@@ -13,7 +13,6 @@ cat << "EOF"
 EOF
 #Installation
 echo -e "#Clonning original GNUK repo from $gnuk_repo#"
-cd scripts
 yes | rm gnuk -r -R  >> /dev/null 2>&1
 git clone $gnuk_repo
 echo -e "#Installing requirement packages for $DISTRO#"

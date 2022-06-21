@@ -11,15 +11,20 @@ EOF
 #Uploading
 cd gnuk/src
 echo -e "#Configuring GNUK#"
-./configure --vidpid=234b:0000 >> ../../../logs/configure.log
+./configure --vidpid=234b:0000 --enable-debug >> ../../../logs/configure.log
 echo -e "#Compiling GNUK with make"
 build=$(make >> ../../../logs/make.log 2>&1)
 if ! $build ; then
  echo -e "Something went wrong, please check logs/make.log file."
  exit 1    
 fi
-echo -e "#Uploading firmware to stm32#"
+
+read -p "Do you want to upload compiled firmware? y/n: " upload 
+if  [ "$upload" == "y" ]
+  then
 openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c 'program build/gnuk.elf verify reset exit'  
+ fi
+
 read -p "############################################################
 #WARNING!!! IF YOU LOCK MEMORY YOU CAN'T UNLOCK IT LATER!!!#
 ############################################################

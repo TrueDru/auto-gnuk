@@ -12,8 +12,8 @@ EOF
 cd gnuk/src
 echo -e "#Configuring GNUK#"
 read -p "Please, specify the target: " target
+./configure --vidpid=234b:0000 --with-dfu --target=$target --enable-debug >> ../../../logs/dfu-configure.log
 
-./configure --vidpid=234b:0000 --with-dfu --target $target >> ../../../logs/configure.log
 echo -e "#Compiling GNUK with make"
 build=$(make >> ../../../logs/make.log 2>&1)
 if ! $build ; then
@@ -22,6 +22,8 @@ if ! $build ; then
 fi
 echo -e "#GNUK compilation was successful#"
 
+echo -e "#Uploading firmware to stm32#"
+openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c 'program build/gnuk.elf verify reset exit'
 
 echo -e "Press any key to continue..."
 while [ true ] ; do
